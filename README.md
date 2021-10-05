@@ -1,0 +1,2 @@
+# EmoiTeller
+EmojiTeller application
