@@ -4,7 +4,10 @@ const express = require('express');
 const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
 
-var numberOfPlayers= 0 ; 
+var numberOfPlayers= 0; 
+var numberOfMessages = 0;
+var messageList = [];
+var socketList = [];
 //const loadingFrame = document.getElementById("loadingFrame");
 const {
   userJoin,
@@ -30,7 +33,7 @@ io.on('connection', socket => {
     socket.join(user.room);
 
     // Welcome current user
-    //socket.emit('message', formatMessage(botName, 'Welcome to ChatCord!'));
+    socket.emit('message', formatMessage(botName, 'Welcome to ChatCord! '+username));
     numberOfPlayers++;
 
     // Broadcast when a user connects
@@ -53,11 +56,26 @@ io.on('connection', socket => {
 
   // Listen for chatMessage
   socket.on('chatMessage', msg => {
-    if (numberOfPlayers>3) {
     const user = getCurrentUser(socket.id);
     console.log(user.username+": " + msg);
+    messageList.push(msg);
+    socketList.push(socket.id);
+
+    numberOfMessages++;
+    if (numberOfMessages == numberOfPlayers) {
+      console.log(messageList);
+      messageList = shuffle(messageList);
+      console.log(messageList);
+      console.log(numberOfPlayers);
+      for (let i=0; i<numberOfPlayers; i++) {
+        console.log("debug");
+        //io.to(user.room).emit('message', formatMessage(user.username, msg));
+        io.to(socketList[i]).emit("message", formatMessage(user.username, messageList[i]));
+        //console.log(socketList[i]+" "+messageList[i]);
+      }
+    }
     //wait untill the number of messagges is equal to the number of players and there is a message for each player
-    io.to(user.room).emit('message', formatMessage(user.username, msg));}
+     //io.to(user.room).emit('message', formatMessage(user.username, msg));
   });
 
   // Runs when client disconnects
@@ -86,3 +104,21 @@ io.on('connection', socket => {
 const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
