@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/dumoucpc/emoji.dumontmatteo.com/
+    - /bin/cp -R * $DEPLOYPATH
