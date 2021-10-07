@@ -3,15 +3,33 @@ const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
 
+/*usernameForm.addEventListener('submit', (e) =>
+{
+  username = document.getElementById('username').value;
+  avatar =  document.getElementById('avatar').value;
+  console.log(username+avatar);
+});*/
+/*
+const { username, avatar} = Qs.parse(location.search, {
+  ignoreQueryPrefix: true,
+});*/
+
+/*
 // Get username and room from URL
-const { username, room } = Qs.parse(location.search, {
+const { room, version, username, avatar} = Qs.parse(location.search, {
+  ignoreQueryPrefix: true,
+});*/
+
+
+
+const { username, room, avatar } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
 });
 
 const socket = io();
 
 // Join chatroom
-socket.emit('joinRoom', { username, room });
+socket.emit('joinRoom', { username, room, avatar}); //, avatar, version });
 
 // Get room and users
 socket.on('roomUsers', ({ room, users }) => {
@@ -27,6 +45,14 @@ socket.on('message', (message) => {
   // Scroll down
   chatMessages.scrollTop = chatMessages.scrollHeight;
 });
+
+/*
+usernameForm.addEventListener('submit', (e) =>
+{
+  username = document.getElementById('username').value;
+  avatar =  document.getElementById('avatar').value;
+  console.log(username+avatar);
+});*/
 
 // Message submit
 chatForm.addEventListener('submit', (e) => {
@@ -63,6 +89,8 @@ function outputMessage(message) {
   para.innerText = message.text;
   div.appendChild(para);
   document.querySelector('.chat-messages').appendChild(div);
+  on();
+  off();
 }
 
 // Add room name to DOM
@@ -75,7 +103,7 @@ function outputUsers(users) {
   userList.innerHTML = '';
   users.forEach((user) => {
     const li = document.createElement('li');
-    li.innerText = user.username;
+    li.innerText = user.avatar+" "+user.username;
     userList.appendChild(li);
   });
 }
@@ -88,3 +116,42 @@ document.getElementById('leave-btn').addEventListener('click', () => {
   } else {
   }
 });
+
+function on() {
+  try {
+  document.getElementById("overlay").style.display = "block";
+  } catch {};
+}
+
+function off() {
+  try {
+  //document.getElementById("overlay").style.display = "none"; 
+  }
+  catch {};
+}
+/*
+					function getParams(){
+					var idx = document.URL.indexOf('?');
+					var params = new Array();
+					if (idx != -1) {
+					var pairs = document.URL.substring(idx+1, document.URL.length).split('&');
+					for (var i=0; i<pairs.length; i++){
+					nameVal = pairs[i].split('=');
+					params[nameVal[0]] = nameVal[1];
+					}
+					}
+					return params;
+					}
+					params = getParams();
+					firstname = unescape(params["username"]);
+					lastname = unescape(params["avatar"]);
+*/
+
+/*
+document.getElementById('leave-btn').addEventListener('click', () => {
+  const leaveRoom = confirm('Are you sure you want to leave the chatroom?');
+  if (leaveRoom) {
+    window.location = '../index.html';
+  } else {
+  }
+});*/

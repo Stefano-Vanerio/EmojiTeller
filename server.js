@@ -4,11 +4,11 @@ const express = require('express');
 const socketio = require('socket.io');
 const formatMessage = require('./utils/messages');
 
-var numberOfPlayers= 0; 
+var numberOfPlayers= 0; //for each room TODO
 var numberOfMessages = 0;
 var messageList = [];
 var socketList = [];
-//const loadingFrame = document.getElementById("loadingFrame");
+
 const {
   userJoin,
   getCurrentUser,
@@ -23,26 +23,17 @@ const io = socketio(server);
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-const botName = 'Emoji Bot';
-
 // Run when client connects
 io.on('connection', socket => {
-  socket.on('joinRoom', ({ username, room }) => {
-    const user = userJoin(socket.id, username, room);
-
+  socket.on('joinRoom', ({ username, room, avatar}) => {
+    const user = userJoin(socket.id, username, room, avatar);
+    console.log(username);
     socket.join(user.room);
 
     // Welcome current user
-    socket.emit('message', formatMessage(botName, 'Welcome to ChatCord! '+username));
+    //socket.emit('message', formatMessage(botName, 'Welcome to ChatCord! '+username));
     numberOfPlayers++;
 
-    // Broadcast when a user connects
-    /*socket.broadcast
-      .to(user.room)
-      .emit(
-        'message',
-        formatMessage(botName, `${user.username} has joined the chat`)
-      );*/
     console.log(user.username+" has joined the channel");
 
     console.log(numberOfPlayers);
@@ -50,7 +41,7 @@ io.on('connection', socket => {
     // Send users and room info
     io.to(user.room).emit('roomUsers', {
       room: user.room,
-      users: getRoomUsers(user.room)
+      users: getRoomUsers(user.room),
     });
   });
 
@@ -58,22 +49,30 @@ io.on('connection', socket => {
   socket.on('chatMessage', msg => {
     const user = getCurrentUser(socket.id);
     console.log(user.username+": " + msg);
+    
+    if (!socketList.includes(socket.id) ) {
     messageList.push(msg);
     socketList.push(socket.id);
-
+    console.log("entered");
     numberOfMessages++;
-    if (numberOfMessages == numberOfPlayers) {
-      console.log(messageList);
-      messageList = shuffle(messageList);
-      console.log(messageList);
-      console.log(numberOfPlayers);
-      for (let i=0; i<numberOfPlayers; i++) {
-        console.log("debug");
-        //io.to(user.room).emit('message', formatMessage(user.username, msg));
-        io.to(socketList[i]).emit("message", formatMessage(user.username, messageList[i]));
-        //console.log(socketList[i]+" "+messageList[i]);
-      }
+      if (numberOfMessages == numberOfPlayers) {
+        io.to(user.room).emit('message', formatMessage(user.username, "NEXT ROUND"));
+        console.log(messageList);
+        messageList = shuffle(messageList);
+        console.log(messageList);
+        console.log(numberOfPlayers);
+        for (let i=0; i<numberOfPlayers; i++) {
+          console.log("debug");
+          //io.to(user.room).emit('message', formatMessage(user.username, msg));
+          io.to(socketList[i]).emit("message", formatMessage(user.username, messageList[i]));
+          //console.log(socketList[i]+" "+messageList[i]);
+          
+        }
+        numberOfMessages = 0;
+        messageList = [];
+        socketList=[];
     }
+  }
     //wait untill the number of messagges is equal to the number of players and there is a message for each player
      //io.to(user.room).emit('message', formatMessage(user.username, msg));
   });
