@@ -2,34 +2,17 @@ const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
-
-/*usernameForm.addEventListener('submit', (e) =>
-{
-  username = document.getElementById('username').value;
-  avatar =  document.getElementById('avatar').value;
-  console.log(username+avatar);
-});*/
-/*
-const { username, avatar} = Qs.parse(location.search, {
-  ignoreQueryPrefix: true,
-});*/
-
-/*
-// Get username and room from URL
-const { room, version, username, avatar} = Qs.parse(location.search, {
-  ignoreQueryPrefix: true,
-});*/
+const overlay = document.querySelector("overlayText");
 
 
-
-const { username, room, avatar } = Qs.parse(location.search, {
+const { username, room, avatar, color } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
 });
 
 const socket = io();
 
 // Join chatroom
-socket.emit('joinRoom', { username, room, avatar}); //, avatar, version });
+socket.emit('joinRoom', { username, room, avatar, color}); 
 
 // Get room and users
 socket.on('roomUsers', ({ room, users }) => {
@@ -41,18 +24,9 @@ socket.on('roomUsers', ({ room, users }) => {
 socket.on('message', (message) => {
   console.log(message);
   outputMessage(message);
-
   // Scroll down
   chatMessages.scrollTop = chatMessages.scrollHeight;
 });
-
-/*
-usernameForm.addEventListener('submit', (e) =>
-{
-  username = document.getElementById('username').value;
-  avatar =  document.getElementById('avatar').value;
-  console.log(username+avatar);
-});*/
 
 // Message submit
 chatForm.addEventListener('submit', (e) => {
@@ -73,6 +47,7 @@ chatForm.addEventListener('submit', (e) => {
   // Clear input
   e.target.elements.msg.value = '';
   e.target.elements.msg.focus();
+  onOverlay();
 });
 
 // Output message to DOM
@@ -89,8 +64,7 @@ function outputMessage(message) {
   para.innerText = message.text;
   div.appendChild(para);
   document.querySelector('.chat-messages').appendChild(div);
-  on();
-  off();
+  on(message.text);
 }
 
 // Add room name to DOM
@@ -104,6 +78,7 @@ function outputUsers(users) {
   users.forEach((user) => {
     const li = document.createElement('li');
     li.innerText = user.avatar+" "+user.username;
+    li.style.backgroundColor=user.color;
     userList.appendChild(li);
   });
 }
@@ -112,46 +87,39 @@ function outputUsers(users) {
 document.getElementById('leave-btn').addEventListener('click', () => {
   const leaveRoom = confirm('Are you sure you want to leave the chatroom?');
   if (leaveRoom) {
+    socket.disconnect();
     window.location = '../index.html';
   } else {
   }
 });
 
-function on() {
+document.getElementById("audio").loop=true;
+
+function onOverlay() {
   try {
+    document.getElementById("nextButton").style.display = "none";
   document.getElementById("overlay").style.display = "block";
+  document.getElementById("overlayText").style.writingMode = "horizontal-tb";
+  document.getElementById("overlayText").textContent = "WAIT!";
+
+  //disable button
+  //change visual stuff
+  } catch {};
+}
+
+function on(message) {
+  try {
+  document.getElementById("overlayText").style.writingMode = "vertical-lr";
+  document.getElementById("overlayText").textContent = message;
+  document.getElementById("im").style.display="none"; 
+  document.getElementById("overlay").style.display = "block";
+  document.getElementById("nextButton").style.display = "block";
   } catch {};
 }
 
 function off() {
   try {
-  //document.getElementById("overlay").style.display = "none"; 
+  document.getElementById("overlay").style.display = "none"; 
   }
   catch {};
 }
-/*
-					function getParams(){
-					var idx = document.URL.indexOf('?');
-					var params = new Array();
-					if (idx != -1) {
-					var pairs = document.URL.substring(idx+1, document.URL.length).split('&');
-					for (var i=0; i<pairs.length; i++){
-					nameVal = pairs[i].split('=');
-					params[nameVal[0]] = nameVal[1];
-					}
-					}
-					return params;
-					}
-					params = getParams();
-					firstname = unescape(params["username"]);
-					lastname = unescape(params["avatar"]);
-*/
-
-/*
-document.getElementById('leave-btn').addEventListener('click', () => {
-  const leaveRoom = confirm('Are you sure you want to leave the chatroom?');
-  if (leaveRoom) {
-    window.location = '../index.html';
-  } else {
-  }
-});*/

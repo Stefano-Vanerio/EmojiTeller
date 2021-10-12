@@ -8,6 +8,7 @@ var numberOfPlayers= 0; //for each room TODO
 var numberOfMessages = 0;
 var messageList = [];
 var socketList = [];
+var playerList = [];
 
 const {
   userJoin,
@@ -25,9 +26,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Run when client connects
 io.on('connection', socket => {
-  socket.on('joinRoom', ({ username, room, avatar}) => {
-    const user = userJoin(socket.id, username, room, avatar);
+  socket.on('joinRoom', ({ username, room, avatar, color}) => {
+    const user = userJoin(socket.id, username, room, avatar, color);
     console.log(username);
+    playerList.push(user.username);
     socket.join(user.room);
 
     // Welcome current user
@@ -56,7 +58,7 @@ io.on('connection', socket => {
     console.log("entered");
     numberOfMessages++;
       if (numberOfMessages == numberOfPlayers) {
-        io.to(user.room).emit('message', formatMessage(user.username, "NEXT ROUND"));
+        //io.to(user.room).emit('message', formatMessage(user.username, "The next storyteller is: "+randomStoryteller(playerList)));
         console.log(messageList);
         messageList = shuffle(messageList);
         console.log(messageList);
@@ -68,9 +70,11 @@ io.on('connection', socket => {
           //console.log(socketList[i]+" "+messageList[i]);
           
         }
+        playerList= [];
         numberOfMessages = 0;
         messageList = [];
         socketList=[];
+        
     }
   }
     //wait untill the number of messagges is equal to the number of players and there is a message for each player
@@ -80,15 +84,15 @@ io.on('connection', socket => {
   // Runs when client disconnects
   socket.on('disconnect', () => {
     const user = userLeave(socket.id);
+   /* playerList = playerList.filter(function(value, index, arr){ 
+      return value != user.user;
+    });*/
+    //TO DO RIMUOVERE MESSAGGIO DI PLAYER SE SI DISCONNETTE
     numberOfPlayers--;
     if (numberOfPlayers<0) {numberOfPlayers=0;}
     console.log(numberOfPlayers);
 
     if (user) {
-      /*io.to(user.room).emit(
-        'message',
-        formatMessage(botName, `${user.username} has left the chat`)
-      );*/
       console.log(user.username+" has left the channel");
 
       // Send users and room info
@@ -120,4 +124,9 @@ function shuffle(array) {
   }
 
   return array;
-}
+  }
+
+  function randomStoryteller(array) {
+    shuffle(array);
+    return array[1];
+  }

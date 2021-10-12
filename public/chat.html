@@ -40,8 +40,6 @@
         </form>
       </div>
     </div>
-    <div id="overlay"></div>
-
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.2/qs.min.js"
       integrity="sha256-TDxXjkAUay70ae/QJBEpGKkpVslXaHHayklIVglFRT4="
@@ -51,4 +49,27 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/main.js"></script>
   </body>
+  <style>
+    #overlayText{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: 20vw;
+      color: rgb(0, 0, 0);
+      transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%); 
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      align-items: center;
+      height: 100%;
+      justify-content: center;
+    }
+    </style>
+  <div id="overlay">
+    <div><button id="nextButton" onclick="off()" class="btn" display="none">Next Round</button></div>
+      <div id="overlayText">Overlay Text</div>
+      <div id="overlayImage">
+        <img id="im" src="Alarm.png" alt="Time is passing" width="700" height="600" />
+      </div>
+  </div>
 </html>
