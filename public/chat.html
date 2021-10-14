@@ -26,7 +26,7 @@
           <h3><i class="fas fa-users"></i> Users</h3>
           <ul id="users"></ul>
         </div>
-        <div class="chat-messages"></div>
+        <div class="chat-messages" style="display: none;"></div>
       </main>
       <div class="chat-form-container">
         <form id="chat-form">
@@ -40,17 +40,28 @@
           <button class="btn-send"><i class="fas fa-paper-plane"></i></button>
         </form>
       </div>
+
+      <div id="wait-overlay" class="overlay">
+        <div class="wait-container">
+          <span class="wait-text">Waiting for everyone to answer</span>
+          <img id="im" src="Alarm.png" alt="clock image" height="200" width="220" class="wait-img" />
+        </div>
+      </div>
+
+      <div id="emoji-overlay" class="overlay">
+        <div class="emoji-btn-ctn">
+          <a id="next-round" class="btn-secondary">Next Round</a>
+        </div>
+        <div class="emoji-ctn">
+          <div class="overlayText" id="overlayText">No emojis :(</div>
+        </div>
+        
+      </div>
+
+
     </div>
     
-    <div id="overlay">
-      <div>
-        <button id="nextButton" onclick="off()" class="btn" display="none">Next Round</button>
-      </div>
-        <div id="overlayText">Overlay Text</div>
-        <div id="overlayImage">
-          <img id="im" src="Alarm.png" alt="Time is passing" width="700" height="600" />
-        </div>
-    </div>
+
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.2/qs.min.js"
       integrity="sha256-TDxXjkAUay70ae/QJBEpGKkpVslXaHHayklIVglFRT4="

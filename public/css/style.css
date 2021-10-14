@@ -70,7 +70,8 @@ a {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	height: 100%;
+	min-height: -webkit-fill-available;
+	min-height: 100vh;
 	width: 100%;
 	max-width: 500px;
 	color: black;
@@ -181,21 +182,6 @@ a {
 	background-color: snow;
 }
 
-#overlayText{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  font-size: 20vw;
-  color: rgb(0, 0, 0);
-  transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%); 
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  align-items: center;
-  height: 100%;
-  justify-content: center;
-}
-
 /* Join Page */
 .join-container {
 	width: 100%;
@@ -264,30 +250,84 @@ header>img {
 	}
 }
 
-#overlay {
-	position: fixed; /* Sit on top of the page content */
-	display: none; /* Hidden by default */
+	#--OLD--overlayText{
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  font-size: 20vw;
+	  color: rgb(0, 0, 0);
+	  transform: translate(-50%,-50%);
+	  -ms-transform: translate(-50%,-50%); 
+	  writing-mode: vertical-rl;
+	  text-orientation: mixed;
+	  align-items: center;
+	  height: 100%;
+	  justify-content: center;
+	}
+
+  .overlay {
+	position: absolute; /* Sit on top of the page content */
+	/* display: none; Hidden by default */
 	width: 100%; /* Full width (cover the whole page) */
 	height: 100%; /* Full height (cover the whole page) */
 	top: 0;
 	left: 0;
-	right: 0;
-	bottom: 0;
+	display: flex;
+	place-items: center;
 	background-color: rgb(255, 255, 255); /* Black background with opacity */
 	z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
-	cursor: pointer; /* Add a pointer on hover */
   }
 
-  #div {
-	width: 100%; /* Full width (cover the whole page) */
-	height: 100%; /* Full height (cover the whole page) */
+  #emoji-overlay {
+  	z-index: 3;
   }
 
-  #im {
-	justify-content: baseline;
-	align-items: center;
-	margin-bottom: 5px;
+  .wait-container {
+  	display: flex;
+  	flex-direction: column;
+  	width: 100%;
+  	text-align: center;
+  	justify-content: center;
   }
+
+  .wait-text {
+  	font-size: 24px;
+  	max-width: 250px;
+  	margin: auto;
+  }
+
+  .wait-img {
+	margin: auto;
+	margin-top: 15px;
+  }
+
+  .emoji-btn-ctn {
+  	padding: 20px;
+  	width: 100%;
+  	display: flex;
+  	justify-content: flex-end;
+  }
+
+  #emoji-overlay{
+  	flex-direction: column;
+  }
+
+  .emoji-ctn{
+  	height: 100%;
+  	width: 100%;
+  	display: flex;
+  	place-items: center;
+  }
+
+  .overlayText {
+  	font-size: 50px;
+  	margin: auto;
+  }
+
+  .emoji-ctn:active{
+  	transform: rotate(180deg);
+  }
+
 
 
 
