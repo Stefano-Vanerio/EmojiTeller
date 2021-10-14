@@ -17,8 +17,10 @@
 body {
 	font-family: 'Nunito', sans-serif;
 	font-size: 16px;
-	background: var(--light-color);
-	margin: 20px;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 ul {
@@ -32,10 +34,14 @@ a {
 .btn {
 	cursor: pointer;
 	padding: 5px 15px;
-	background: var(--light-color);
-	color: var(--dark-color-a);
+	background: var(--dark-color-a);
+	color: white;
 	border: 0;
-	font-size: 17px;
+	font-size: 28px;
+	height: 2.5em;
+	border-radius: 8px;
+	font-family: 'Nunito', sans-serif;
+	font-weight: normal;
 }
 
 /* Chat Page */
@@ -130,22 +136,20 @@ a {
 
 /* Join Page */
 .join-container {
+	width: 100%;
 	max-width: 500px;
-	margin: 80px auto;
-	color: #fff;
+	color: black;
 }
 
 .join-header {
 	text-align: center;
 	padding: 20px;
-	background: var(--dark-color-a);
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 }
 
 .join-main {
 	padding: 30px 40px;
-	background: var(--dark-color-b);
 }
 
 .join-main p {
@@ -153,19 +157,23 @@ a {
 }
 
 .join-main .form-control {
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 }
 
 .join-main label {
+	font-size: 20px;
 	display: block;
 	margin-bottom: 5px;
 }
 
 .join-main input[type='text'] {
-	font-size: 16px;
+	font-size: 20px;
 	padding: 5px;
-	height: 40px;
+	height: 1.8em;
 	width: 100%;
+	border: none;
+	background-color: #ebedf2;
+	color: black;
 }
 
 .join-main select {
@@ -176,8 +184,12 @@ a {
 }
 
 .join-main .btn {
-	margin-top: 20px;
 	width: 100%;
+}
+
+header>img {
+	width: 100%;
+	padding: 20px;
 }
 
 @media (max-width: 700px) {
