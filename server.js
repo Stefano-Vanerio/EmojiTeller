@@ -46,13 +46,11 @@ io.on('connection', socket => {
     console.log(user.username+" message sended");
 
       if (messageList.length == playerList.length && messageList.length>3) {
-        console.log(messageList);
         messageList = shuffle(messageList);
         console.log(messageList);
         console.log(playerList.length);
         for (let i=0; i<playerList.length; i++) {
-          console.log("showing messages");
-          io.to(playerMessageList[i]).emit("message", formatMessage(user.username, messageList[i]));        
+          io.to(playerMessageList[i].id).emit("message", formatMessage(user.username, messageList[i]));        
         }
         messageList = [];
         playerMessageList=[];
@@ -64,9 +62,9 @@ io.on('connection', socket => {
   socket.on('disconnect', (reason) => {
     const user = userLeave(socket.id);
 
-    console.log(playerList);
-    console.log(messageList);
-    console.log(playerMessageList);
+    console.log("player list: "+playerList);
+    console.log("message list: "+messageList);
+    console.log("mess of player list: "+playerMessageList);
 
     var index = playerList.findIndex(user => user.id === socket.id);
   
@@ -80,9 +78,9 @@ io.on('connection', socket => {
       playerMessageList.splice(indexTwo, 1)[0];
     }
 
-    console.log(playerList);
-    console.log(messageList);
-    console.log(playerMessageList);
+    console.log("player list: "+playerList);
+    console.log("message list: "+messageList);
+    console.log("mess of player list: "+playerMessageList);
 
     if (user) {
       console.log(user.username+" has left the channel");
