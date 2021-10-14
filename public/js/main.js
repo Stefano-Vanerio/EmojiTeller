@@ -1,22 +1,20 @@
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
-const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
 const overlay = document.querySelector("overlayText");
 
 
-const { username, room, avatar, color } = Qs.parse(location.search, {
+const { username} = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
 });
 
 const socket = io();
 
 // Join chatroom
-socket.emit('joinRoom', { username, room, avatar, color}); 
+socket.emit('joinRoom', { username}); 
 
 // Get room and users
-socket.on('roomUsers', ({ room, users }) => {
-  outputRoomName(room);
+socket.on('roomUsers', ({ users }) => {
   outputUsers(users);
 });
 
@@ -67,18 +65,12 @@ function outputMessage(message) {
   on(message.text);
 }
 
-// Add room name to DOM
-function outputRoomName(room) {
-  roomName.innerText = room;
-}
-
 // Add users to DOM
 function outputUsers(users) {
   userList.innerHTML = '';
   users.forEach((user) => {
     const li = document.createElement('li');
-    li.innerText = user.avatar+" "+user.username;
-    li.style.backgroundColor=user.color;
+    li.innerText = user.username;
     userList.appendChild(li);
   });
 }
@@ -101,9 +93,6 @@ function onOverlay() {
   document.getElementById("overlay").style.display = "block";
   document.getElementById("overlayText").style.writingMode = "horizontal-tb";
   document.getElementById("overlayText").textContent = "WAIT!";
-
-  //disable button
-  //change visual stuff
   } catch {};
 }
 
