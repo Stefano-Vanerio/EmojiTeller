@@ -18,6 +18,7 @@ body {
 	font-family: 'Nunito', sans-serif;
 	font-size: 16px;
 	height: 100vh;
+	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -44,20 +45,38 @@ a {
 	font-weight: normal;
 }
 
+.btn-secondary {
+	cursor: pointer;
+	padding: 10px 15px;
+	background: #d9e6ff;
+	color: #153066;
+	border: 0;
+	font-size: 16px;
+	height: auto;
+	border-radius: 4px;
+	font-family: 'Nunito', sans-serif;
+	font-weight: normal;
+}
+
+#leave-btn {
+	background-color: #FFD480;
+	color: #b25601;
+}
+
 /* Chat Page */
 
 .chat-container {
-	max-width: 1100px;
-	background: #fff;
-	margin: 30px auto;
-	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100%;
+	width: 100%;
+	max-width: 500px;
+	color: black;
 }
 
 .chat-header {
-	background: var(--dark-color-a);
-	color: #fff;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
+	color: black;
 	padding: 15px;
 	display: flex;
 	align-items: center;
@@ -81,6 +100,21 @@ a {
 	background: rgba(0, 0, 0, 0.1);
 	padding: 10px;
 	margin-bottom: 20px;
+}
+
+.people-count {
+	display: flex;
+	place-items:center;
+}
+
+.people-count>img {
+	object-fit: contain;
+}
+
+.people-count>span {
+	margin-left: 5px;
+	font-size: 24px;
+	font-weight: bold;
 }
 
 .chat-sidebar h3 {
@@ -119,8 +153,7 @@ a {
 }
 
 .chat-form-container {
-	padding: 20px 30px;
-	background-color: var(--dark-color-a);
+	padding: 10px;
 }
 
 .chat-form-container form {
@@ -128,10 +161,23 @@ a {
 }
 
 .chat-form-container input[type='text'] {
+	width: 100%;
 	font-size: 16px;
 	padding: 5px;
-	height: 40px;
-	flex: 1;
+	height: 2.5em;
+	border: none;
+	border-bottom: solid 2px #eff1f7;
+}
+
+.btn-send {
+	border: none;
+	background-color: white;
+	color: #3377FF;
+	width: 60px;
+}
+
+.btn-send:active {
+	background-color: snow;
 }
 
 /* Join Page */
