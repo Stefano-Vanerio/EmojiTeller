@@ -37,6 +37,7 @@ io.on('connection', socket => {
   // Listen for chatMessage
   socket.on('chatMessage', msg => {
     const user = getCurrentUser(socket.id);
+    if (user != undefined) {
     console.log(user.username+": " + msg);
     
     if (!playerMessageList.includes(user)) {
@@ -56,7 +57,7 @@ io.on('connection', socket => {
         messageList = [];
         playerMessageList=[];
     }
-  }
+  }}
   });
 
   // Runs when client disconnects
