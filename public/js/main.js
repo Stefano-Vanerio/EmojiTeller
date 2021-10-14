@@ -63,6 +63,7 @@ function outputMessage(message) {
   div.appendChild(para);
   document.querySelector('.chat-messages').appendChild(div);
   on(message.text);
+  twemoji.parse(document.body);
 }
 
 // Add users to DOM
@@ -89,26 +90,21 @@ document.getElementById("audio").loop=true;
 
 function onOverlay() {
   try {
-    document.getElementById("nextButton").style.display = "none";
-  document.getElementById("overlay").style.display = "block";
-  document.getElementById("overlayText").style.writingMode = "horizontal-tb";
-  document.getElementById("overlayText").textContent = "WAIT!";
+    document.getElementById("wait-overlay").style.display = "block";
   } catch {};
 }
 
 function on(message) {
   try {
-  document.getElementById("overlayText").style.writingMode = "vertical-lr";
+  document.getElementById("emoji-overlay").style.display = "block";
   document.getElementById("overlayText").textContent = message;
-  document.getElementById("im").style.display="none"; 
-  document.getElementById("overlay").style.display = "block";
-  document.getElementById("nextButton").style.display = "block";
   } catch {};
 }
 
 function off() {
   try {
-  document.getElementById("overlay").style.display = "none"; 
+    document.getElementById("wait-overlay").style.display = "none";
+    document.getElementById("emoji-overlay").style.display = "none"; 
   }
   catch {};
 }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+
     <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,6 +13,31 @@
     />
     <link rel="stylesheet" href="css/style.css" />
     <title>EmojiTeller App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/emojis.css" />
+    <script src="js/DisMojiPicker.js"></script>
+    <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
+    <!-- Script to render emojis as Twemojis -->
+    <script>
+          window.onload = function() {    
+              // Parses the document body and    
+              // inserts <img> tags in place of Unicode Emojis    
+              twemoji.parse(document.body, 
+                      {folder: 'svg', ext: '.svg'} // This is to specify to Twemoji to use SVGs and not PNGs
+              );
+
+          }
+
+      </script>
+
+      <!-- CSS configurations to tweak how the Twemojis are displayed -->
+      <style>
+          img.emoji {
+              width:1.5em;
+              pointer-events: none; 
+          }
+      </style>
+
   </head>
   <body>
     <div class="chat-container">
@@ -28,6 +54,7 @@
           <ul id="users"></ul>
         </div>
         <div class="chat-messages" style="display: none;"></div>
+        <div id="emojis"></div>
       </main>
       <div class="chat-form-container">
         <form id="chat-form">
@@ -42,14 +69,14 @@
         </form>
       </div>
 
-      <div id="wait-overlay" class="overlay">
+      <div id="wait-overlay" class="overlay" style="display: none;">
         <div class="wait-container">
           <span class="wait-text">Waiting for everyone to answer</span>
           <img id="im" src="Alarm.png" alt="clock image" height="200" width="220" class="wait-img" />
         </div>
       </div>
 
-      <div id="emoji-overlay" class="overlay">
+      <div id="emoji-overlay" class="overlay" style="display: none;">
         <div class="emoji-btn-ctn">
           <a id="next-round" class="btn-secondary">Next Round</a>
         </div>
@@ -71,5 +98,23 @@
     <script src="users.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/main.js"></script>
+    <script>
+      $("#emojis").disMojiPicker();
+      twemoji.parse(document.body);
+
+
+      $("#emojis").picker( function(emoji) {
+      if ($('#msg').val() == undefined) {
+        $('#msg').val(emoji);
+      }
+       else {
+        var a = $('#msg').val();
+        var b = emoji;
+        $('#msg').val(a + b);
+    }
+      }
+
+);
+    </script>
   </body>
 </html>
