@@ -288,6 +288,7 @@ header>img {
   	width: 100%;
   	text-align: center;
   	justify-content: center;
+  	margin: auto;
   }
 
   .wait-text {
