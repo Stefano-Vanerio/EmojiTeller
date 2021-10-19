@@ -32,6 +32,10 @@ io.on('connection', socket => {
 
     console.log(user.username+" has joined the channel");
     console.log(playerList.length);
+
+    io.to("place").emit('roomUsers', {
+      length: playerList.length;
+    });
   });
 
   // Listen for chatMessage

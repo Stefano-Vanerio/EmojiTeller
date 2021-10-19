@@ -69,11 +69,13 @@ function outputMessage(message) {
 // Add users to DOM
 function outputUsers(users) {
   userList.innerHTML = '';
-  users.forEach((user) => {
+  document.getElementById('player-nb').innerHTML = users.length;
+
+  /*users.forEach((user) => {
     const li = document.createElement('li');
     li.innerText = user.username;
     userList.appendChild(li);
-  });
+  });*/
 }
 
 //Prompt the user before leave chat room
