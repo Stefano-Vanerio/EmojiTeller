@@ -91,6 +91,8 @@ document.getElementById("audio").loop=true;
 function onOverlay() {
   try {
     document.getElementById("wait-overlay").style.display = "block";
+    //test overlay fix
+    document.getElementById("emojis").parentElement.style.display = "none";
   } catch {};
 }
 
@@ -105,6 +107,8 @@ function off() {
   try {
     document.getElementById("wait-overlay").style.display = "none";
     document.getElementById("emoji-overlay").style.display = "none"; 
+    //test overlay fix
+    document.getElementById("emojis").parentElement.style.display = "block";
   }
   catch {};
 }
