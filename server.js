@@ -89,6 +89,9 @@ io.on('connection', socket => {
     if (user) {
       console.log(user.username+" has left the channel");
     }
+    io.to("place").emit('roomUsers', {
+      length: playerList.length,
+    });
   });
 });
 
