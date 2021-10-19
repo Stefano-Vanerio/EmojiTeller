@@ -14,8 +14,8 @@ const socket = io();
 socket.emit('joinRoom', { username}); 
 
 // Get room and users
-socket.on('roomUsers', ({ users }) => {
-  outputUsers(users);
+socket.on('roomUsers', ({ length }) => {
+  outputUsers(length);
 });
 
 // Message from server
@@ -67,11 +67,10 @@ function outputMessage(message) {
 }
 
 // Add users to DOM
-function outputUsers(users) {
+function outputUsers(length) {
   userList.innerHTML = '';
-  document.getElementById('player-nb').innerHTML = users.length;
-  console.log("users :" + users);
-  console.log(users.length);
+  document.getElementById('player-nb').innerHTML = length;
+  console.log(length);
 
   /*users.forEach((user) => {
     const li = document.createElement('li');
