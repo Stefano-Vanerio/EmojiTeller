@@ -34,7 +34,7 @@ io.on('connection', socket => {
     console.log(playerList.length);
 
     io.to("place").emit('roomUsers', {
-      length: playerList.length;
+      length: playerList.length,
     });
   });
 
