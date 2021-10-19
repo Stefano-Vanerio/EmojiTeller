@@ -94,7 +94,7 @@ document.getElementById("audio").loop=true;
 
 function onOverlay() {
   try {
-    document.getElementById("wait-overlay").style.display = "block";
+    document.getElementById("wait-overlay").style.display = "flex";
     //test overlay fix
     document.getElementById("emojis").parentElement.style.display = "none";
   } catch {};
@@ -102,7 +102,7 @@ function onOverlay() {
 
 function on(message) {
   try {
-  document.getElementById("emoji-overlay").style.display = "block";
+  document.getElementById("emoji-overlay").style.display = "flex";
   document.getElementById("overlayText").textContent = message;
   } catch {};
 }
