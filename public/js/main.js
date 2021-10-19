@@ -70,6 +70,8 @@ function outputMessage(message) {
 function outputUsers(users) {
   userList.innerHTML = '';
   document.getElementById('player-nb').innerHTML = users.length;
+  console.log("users :" + users);
+  console.log(users.length);
 
   /*users.forEach((user) => {
     const li = document.createElement('li');
