@@ -1,6 +1,6 @@
 # EmojiTeller WebApp
 Web application used to play the game "EmojTeller", based on the ChatCord App and Tweemoji Keyboard (https://repl.it/github/bradtraversy/chatcord)
-![hero](https://user-images.githubusercontent.com/61703922/138708390-435e7f72-73b7-468f-92a9-4166df76ff4d.jpg)
+![hero](https://user-images.githubusercontent.com/61703922/138708517-72c0f206-b741-4565-a14c-227b109213d3.jpg)
 ## Usage
 ```
 npm install
